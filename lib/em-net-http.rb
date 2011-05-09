@@ -144,7 +144,7 @@ module Net
         emres = EM::NetHTTP::Response.new(res.response_header)
         emres.set_body res.response
         nhresclass = Net::HTTPResponse.response_class(emres.code.to_s)
-        nhres = nhresclass.new(emres.http_version, emres.code, emres.message)
+        nhres = nhresclass.new(emres.http_version, emres.code.to_s, emres.message)
         emres.to_hash.each do |k, v|
           nhres.add_field(k, v)
         end
@@ -158,8 +158,8 @@ module Net
         httpreq.headers { |headers|
 
           emres = EM::NetHTTP::Response.new(headers)
-          nhresclass = Net::HTTPResponse.response_class(emres.code)
-          nhres = nhresclass.new(emres.http_version, emres.code, emres.message)
+          nhresclass = Net::HTTPResponse.response_class(emres.code.to_s)
+          nhres = nhresclass.new(emres.http_version, emres.code.to_s, emres.message)
           emres.to_hash.each do |k, v|
             nhres.add_field(k, v)
           end
